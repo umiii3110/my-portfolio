@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yamada Taro | Web Designer Portfolio (v0.1.0)</title>
+    <!-- Tailwind CSS (CDN for simple integration) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind Config for Custom Colors & Dark Mode -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2C3E50',
+                        accent: '#E74C3C',
+                        bgLight: '#ECF0F1',
+                        textLight: '#333333',
+                        bgDark: '#1a202c',
+                        textDark: '#f7fafc',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .typing-caret {
+            border-right: 2px solid #E74C3C;
+            animation: blink 0.75s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: #E74C3C }
+        }
+
+        .skill-fill {
+            width: 0;
+            transition: width 1s ease-in-out;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #E74C3C;
+            box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
+        }
+        
+        header.scrolled {
+            background-color: rgba(236, 240, 241, 0.95);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .dark header.scrolled {
+            background-color: rgba(26, 32, 44, 0.95);
+        }
+    </style>
+</head>
+<body class="bg-bgLight text-textLight dark:bg-bgDark dark:text-textDark antialiased relative">
+
+    <header class="fixed w-full top-0 z-50 transition-all duration-300" id="header">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold tracking-tighter text-primary dark:text-white">YT.Design</a>
+            
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="hover:text-accent transition-colors">About</a>
+                <a href="#skills" class="hover:text-accent transition-colors">Skills</a>
+                <a href="#works" class="hover:text-accent transition-colors">Works</a>
+                <a href="#contact" class="hover:text-accent transition-colors">Contact</a>
+                
+                <!-- Dark Mode Toggle Button -->
+                <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-primary dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" aria-label="Toggle Dark Mode">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:inline"></i>
+                </button>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden flex items-center space-x-4">
+                 <button id="theme-toggle-mobile" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-primary dark:text-white" aria-label="Toggle Dark Mode">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:inline"></i>
+                </button>
+                <button id="mobile-menu-btn" class="text-primary dark:text-white focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 shadow-lg absolute w-full">
+            <a href="#about" class="block px-6 py-3 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">About</a>
+            <a href="#skills" class="block px-6 py-3 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">Skills</a>
+            <a href="#works" class="block px-6 py-3 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">Works</a>
+            <a href="#contact" class="block px-6 py-3 hover:bg-gray-50 dark:hover:bg-gray-700">Contact</a>
+        </div>
+    </header>
+
+    <!-- 1. Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden bg-white dark:bg-gray-900">
+        <!-- Abstract Background Shapes -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 opacity-20">
+            <div class="absolute w-96 h-96 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-30 top-10 -left-20 animate-blob"></div>
+            <div class="absolute w-96 h-96 bg-accent rounded-full mix-blend-multiply filter blur-3xl opacity-30 top-40 right-20 animate-blob animation-delay-2000"></div>
+            <div class="absolute w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 -bottom-20 left-40 animate-blob animation-delay-4000"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <h1 class="text-5xl md:text-7xl font-extrabold text-primary dark:text-white mb-6 tracking-tight">
+                <span class="block">Colors Logic,</span>
+                <span class="block text-accent">Designs Magic.</span>
+            </h1>
+            <p class="mt-4 text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
+                色彩検定1級の知識と確かなコーディング技術で、企業の想いを「伝わる」形に。<br class="hidden md:block">CVR向上に貢献するWebデザインを提供します。
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="#works" class="px-8 py-4 bg-accent text-white font-bold rounded-full shadow-lg shadow-accent/30 hover:bg-red-600 hover:-translate-y-1 transition-all duration-300">
+                    実績を見る
+                </a>
+                <a href="#contact" class="px-8 py-4 bg-white dark:bg-transparent text-primary dark:text-white border-2 border-primary dark:border-white font-bold rounded-full hover:bg-primary hover:text-white dark:hover:bg-white dark:hover:text-primary transition-all duration-300">
+                    お問い合わせ
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#about" class="text-gray-400 hover:text-accent transition-colors">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- 2. About Section -->
+    <section id="about" class="py-24 bg-bgLight dark:bg-bgDark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-primary dark:text-white mb-2">Who I Am</h2>
+                <div class="w-16 h-1 bg-accent mx-auto rounded"></div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <!-- Profile Image -->
+                <div class="w-full md:w-1/3 flex justify-center fade-in">
+                    <div class="relative w-64 h-64 rounded-full p-2 bg-gradient-to-tr from-accent to-primary shadow-xl">
+                         <!-- Placeholder for illustration -->
+                         <img src="https://placehold.co/400x400/2C3E50/FFFFFF?text=Taro\nYamada" alt="山田太郎 プロフィール画像" class="w-full h-full object-cover rounded-full border-4 border-white dark:border-gray-800">
+                    </div>
+                </div>
+
+                <!-- Profile Text -->
+                <div class="w-full md:w-2/3 fade-in delay-100">
+                    <h3 class="text-2xl font-bold text-primary dark:text-white mb-4">山田 太郎 <span class="text-lg font-normal text-gray-500">Taro Yamada</span></h3>
+                    <p class="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
+                        はじめまして、Webデザイナーの山田太郎です。<br>
+                        都内の制作会社で3年間、企業のコーポレートサイトや商品LPの制作に従事し、現在はフリーランスとして活動しています。
+                    </p>
+                    
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border-l-4 border-accent mb-6">
+                        <h4 class="font-bold text-primary dark:text-white mb-2 flex items-center">
+                            <i class="fas fa-lightbulb text-accent mr-2"></i> 強み
+                        </h4>
+                        <p class="text-gray-700 dark:text-gray-300 text-sm">
+                            ただ綺麗なだけでなく、<strong>色彩心理学に基づいた配色設計</strong>が得意です。「信頼感を与える青」「購買意欲をそそる赤」など、目的に合わせた色使いでビジネスの課題解決をサポートします。
+                        </p>
+                    </div>
+
+                    <p class="text-gray-700 dark:text-gray-300 text-sm flex items-center">
+                        <i class="fas fa-coffee text-primary dark:text-white mr-3 text-lg"></i>
+                        <span class="font-semibold mr-2">趣味:</span> 街中の看板の配色分析、カフェ巡り
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Skills Section -->
+    <section id="skills" class="py-24 bg-white dark:bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-primary dark:text-white mb-2">My Skills</h2>
+                <div class="w-16 h-1 bg-accent mx-auto rounded"></div>
+                <p class="mt-4 text-gray-600 dark:text-gray-400">デザインからコーディングまで一貫して対応可能です。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <!-- Design Skills -->
+                <div class="fade-in">
+                    <h3 class="text-2xl font-bold text-primary dark:text-white mb-6 flex items-center border-b pb-2 dark:border-gray-700">
+                        <i class="fas fa-pen-nib mr-3 text-accent"></i> Design
+                    </h3>
+                    <div class="space-y-6">
+                        <!-- Skill Item -->
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium text-gray-800 dark:text-gray-200">Figma / Adobe XD</span>
+                                <span class="text-sm text-gray-500">ワイヤー・プロトタイプ</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                <div class="bg-primary h-2 rounded-full skill-fill" data-width="90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium text-gray-800 dark:text-gray-200">Photoshop</span>
+                                <span class="text-sm text-gray-500">写真補正・バナー</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                <div class="bg-primary h-2 rounded-full skill-fill" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium text-gray-800 dark:text-gray-200">Illustrator</span>
+                                <span class="text-sm text-gray-500">ロゴ・アイコン作成</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                <div class="bg-primary h-2 rounded-full skill-fill" data-width="80%"></div>
+                            </div>
+                        </div>
+                        <div class="mt-4 bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg border border-yellow-200 dark:border-yellow-700">
+                            <p class="flex items-center font-bold text-yellow-800 dark:text-yellow-500">
+                                <i class="fas fa-medal mr-2"></i> 色彩検定1級 (AFT認定)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Development Skills -->
+                <div class="fade-in delay-100">
+                    <h3 class="text-2xl font-bold text-primary dark:text-white mb-6 flex items-center border-b pb-2 dark:border-gray-700">
+                        <i class="fas fa-code mr-3 text-accent"></i> Development
+                    </h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium text-gray-800 dark:text-gray-200">HTML5</span>
+                                <span class="text-sm text-gray-500">セマンティックマークアップ</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                <div class="bg-primary h-2 rounded-full skill-fill" data-width="95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium text-gray-800 dark:text-gray-200">CSS3 / SCSS</span>
+                                <span class="text-sm text-gray-500">Flexbox, Grid, BEM</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                <div class="bg-primary h-2 rounded-full skill-fill" data-width="90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium text-gray-800 dark:text-gray-200">JavaScript</span>
+                                <span class="text-sm text-gray-500">DOM操作, アニメーション</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                <div class="bg-primary h-2 rounded-full skill-fill" data-width="75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium text-gray-800 dark:text-gray-200">WordPress</span>
+                                <span class="text-sm text-gray-500">オリジナルテーマ作成</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                <div class="bg-primary h-2 rounded-full skill-fill" data-width="80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Works Section -->
+    <section id="works" class="py-24 bg-bgLight dark:bg-bgDark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-primary dark:text-white mb-2">Selected Works</h2>
+                <div class="w-16 h-1 bg-accent mx-auto rounded"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <!-- Case 1 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group fade-in">
+                    <div class="relative h-60 overflow-hidden bg-gray-200">
+                        <img src="https://placehold.co/800x600/1e3a8a/ffffff?text=Corporate+Site" alt="株式会社テックスタイル" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-primary bg-opacity-80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white font-bold border-2 border-white px-6 py-2 rounded-full">View Details</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-bold text-accent uppercase tracking-wider">Corporate Site</span>
+                        <h3 class="text-xl font-bold text-primary dark:text-white mt-2 mb-3">株式会社テックスタイル 様</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                            信頼感を重視したネイビー基調のデザイン。レスポンシブ対応によりスマホからの問い合わせが120%増加しました。
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded">HTML/CSS</span>
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded">WordPress</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 2 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group fade-in delay-100">
+                    <div class="relative h-60 overflow-hidden bg-gray-200">
+                        <img src="https://placehold.co/800x600/fbcfe8/be185d?text=Landing+Page" alt="美容液 Lumiere" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-pink-600 bg-opacity-80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white font-bold border-2 border-white px-6 py-2 rounded-full">View Details</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-bold text-accent uppercase tracking-wider">Landing Page</span>
+                        <h3 class="text-xl font-bold text-primary dark:text-white mt-2 mb-3">美容液「Lumiere」</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                            ターゲット層（30代女性）に響くゴールドとピンクの配色。FV（ファーストビュー）の離脱率改善に貢献しました。
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded">Figma</span>
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded">HTML/CSS</span>
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded">JS(GSAP)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 3 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group fade-in delay-200">
+                    <div class="relative h-60 overflow-hidden bg-gray-200">
+                        <img src="https://placehold.co/800x600/fef3c7/b45309?text=Cafe+Website" alt="カフェ Sun & Beans" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-yellow-600 bg-opacity-80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="text-white font-bold border-2 border-white px-6 py-2 rounded-full">View Details</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-bold text-accent uppercase tracking-wider">Shop Site</span>
+                        <h3 class="text-xl font-bold text-primary dark:text-white mt-2 mb-3">カフェ「Sun & Beans」</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                            暖色系で居心地の良さを表現。メニューのシズル感を引き立てるレイアウトと写真配置にこだわりました。
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded">XD</span>
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded">HTML/CSS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Contact Section -->
+    <section id="contact" class="py-24 bg-primary text-white">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-4xl font-bold mb-2">Get In Touch</h2>
+                <div class="w-16 h-1 bg-accent mx-auto rounded mb-6"></div>
+                <p class="text-gray-300 text-lg">制作のご依頼、お見積もり、その他ご相談はお気軽にどうぞ。<br>2営業日以内に返信いたします。</p>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12 text-gray-800 dark:text-white fade-in">
+                <form id="contactForm" class="space-y-6" onsubmit="event.preventDefault(); showCustomMessage('メッセージを送信しました！(デモ)');">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium mb-2 dark:text-gray-300">お名前 <span class="text-accent">*</span></label>
+                            <input type="text" id="name" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 focus:bg-white dark:focus:bg-gray-600 transition-colors">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium mb-2 dark:text-gray-300">メールアドレス <span class="text-accent">*</span></label>
+                            <input type="email" id="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 focus:bg-white dark:focus:bg-gray-600 transition-colors">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium mb-2 dark:text-gray-300">お問い合わせ内容 <span class="text-accent">*</span></label>
+                        <textarea id="message" rows="5" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 focus:bg-white dark:focus:bg-gray-600 transition-colors"></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="px-10 py-4 bg-accent text-white font-bold rounded-full hover:bg-red-600 transform hover:-translate-y-1 transition-all duration-300 shadow-lg shadow-accent/30 w-full md:w-auto">
+                            送信する <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Social Links -->
+            <div class="mt-16 flex justify-center space-x-6 fade-in">
+                <a href="#" class="w-12 h-12 rounded-full bg-white bg-opacity-10 flex items-center justify-center hover:bg-accent hover:text-white transition-all duration-300" aria-label="Twitter">
+                    <i class="fab fa-twitter text-xl"></i>
+                </a>
+                <a href="#" class="w-12 h-12 rounded-full bg-white bg-opacity-10 flex items-center justify-center hover:bg-accent hover:text-white transition-all duration-300" aria-label="Instagram">
+                    <i class="fab fa-instagram text-xl"></i>
+                </a>
+                <a href="#" class="w-12 h-12 rounded-full bg-white bg-opacity-10 flex items-center justify-center hover:bg-accent hover:text-white transition-all duration-300" aria-label="Dribbble">
+                    <i class="fab fa-dribbble text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#1a252f] text-gray-400 py-8 text-center text-sm">
+        <p>&copy; 2026 Taro Yamada. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Custom Message Box (Replaces alert()) -->
+    <div id="messageBox" class="fixed bottom-5 right-5 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+        <span id="messageText"></span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            /* 1. Dark Mode Toggle Logic */
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const themeToggleBtnMobile = document.getElementById('theme-toggle-mobile');
+            const htmlElement = document.documentElement;
+
+            // Check system preference or localStorage
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                htmlElement.classList.add('dark');
+            }
+
+            const toggleTheme = () => {
+                htmlElement.classList.toggle('dark');
+                if (htmlElement.classList.contains('dark')) {
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                }
+            };
+
+            themeToggleBtn.addEventListener('click', toggleTheme);
+            themeToggleBtnMobile.addEventListener('click', toggleTheme);
+
+            /* 2. Mobile Menu Toggle */
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                // Change icon
+                const icon = mobileMenuBtn.querySelector('i');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                } else {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                }
+            });
+
+            // Close mobile menu on link click
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                });
+            });
+
+            /* 3. Header Scroll Effect */
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                    header.classList.add('py-2');
+                    header.classList.remove('py-4');
+                } else {
+                    header.classList.remove('scrolled');
+                    header.classList.add('py-4');
+                    header.classList.remove('py-2');
+                }
+            });
+
+            /* 4. Intersection Observer for Fade-In and Skill Bars */
+            const faders = document.querySelectorAll('.fade-in');
+            const skillFills = document.querySelectorAll('.skill-fill');
+
+            const appearOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('appear');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, appearOptions);
+
+            faders.forEach(fader => {
+                appearOnScroll.observe(fader);
+            });
+
+            // Specific observer for skill bars to animate width
+            const skillObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.getAttribute('data-width');
+                        // Add a slight delay for better visual effect
+                        setTimeout(() => {
+                            entry.target.style.width = width;
+                        }, 300);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            skillFills.forEach(skill => {
+                skillObserver.observe(skill);
+            });
+        });
+
+        /* 5. Custom Message Box Function (replaces alert) */
+        function showCustomMessage(msg) {
+            const msgBox = document.getElementById('messageBox');
+            const msgText = document.getElementById('messageText');
+            
+            msgText.textContent = msg;
+            
+            // Show
+            msgBox.classList.remove('translate-y-20', 'opacity-0');
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                msgBox.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
